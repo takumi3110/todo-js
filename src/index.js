@@ -17,10 +17,24 @@ const onClickAdd = () => {
   // li
   const li = document.createElement("li");
 
+  // button
+  const completeButton = document.createElement("button");
+  completeButton.innerText = "完了";
+  completeButton.addEventListener("click", () => {
+    alert("complete");
+  });
+
+  const deleteButton = document.createElement("button");
+  deleteButton.innerText = "削除";
+  deleteButton.addEventListener("click", () => {
+    alert("delete");
+  });
+
   // liタグの小要素に各要素を設定
   li.appendChild(div);
   div.appendChild(p);
-  console.log(li);
+  div.appendChild(completeButton);
+  div.appendChild(deleteButton);
 
   // 未完了のリストに追加
   document.querySelector("#incomplete-list").appendChild(li);
