@@ -17,17 +17,44 @@ const onClickAdd = () => {
   // li
   const li = document.createElement("li");
 
+  const deleteFromIncompleteList = (target) => {
+    document.querySelector("#incomplete-list").removeChild(target);
+  };
+
+  const removeChildListRow = (target, button) => {
+    target.querySelector(".list-row").removeChild(button);
+  };
   // button
+  const deleteButton = document.createElement("button");
   const completeButton = document.createElement("button");
+  const backButton = document.createElement("button");
+  const completeList = document.querySelector("#complete-list");
+  backButton.innerText = "戻す";
   completeButton.innerText = "完了";
   completeButton.addEventListener("click", () => {
-    alert("complete");
+    const completeTarget = completeButton.parentNode.parentNode;
+    deleteFromIncompleteList(completeTarget);
+    removeChildListRow(completeTarget, completeButton);
+    removeChildListRow(completeTarget, deleteButton);
+    completeTarget.querySelector(".list-row").appendChild(backButton);
+    completeList.appendChild(completeTarget);
   });
 
-  const deleteButton = document.createElement("button");
   deleteButton.innerText = "削除";
   deleteButton.addEventListener("click", () => {
-    alert("delete");
+    // 押された削除ボタンの親タグ（div）を未完了リストから削除
+    const deleteTarget = deleteButton.parentNode.parentNode;
+    deleteFromIncompleteList(deleteTarget);
+  });
+
+  backButton.addEventListener("click", () => {
+    const backTarget = backButton.parentNode.parentNode;
+    const targetRow = backTarget.querySelector(".list-row");
+    completeList.removeChild(backTarget);
+    removeChildListRow(backTarget, backButton);
+    targetRow.appendChild(completeButton);
+    targetRow.appendChild(deleteButton);
+    document.querySelector("#incomplete-list").appendChild(backTarget);
   });
 
   // liタグの小要素に各要素を設定
